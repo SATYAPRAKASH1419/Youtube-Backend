@@ -16,4 +16,13 @@ app.use(express.static("public")) //allow user or public to access some images o
 app.use(cookieParser()) //acces user's browser cookies (read and set)
 
 
+
+//routes import
+import userRouter from './routes/user.routes.js'
+
+
+//routes declarattion
+app.use("/api/v1/users",userRouter);
+// http://localhost:8000/api/v1/users/register
+
 export {app}
