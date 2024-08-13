@@ -5,8 +5,8 @@ import fs from "fs";
     // Configuration
     cloudinary.config({ 
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-        api_key: process.env.CLOUDINARY__API_KEY, 
-        api_secret: process.env.CLOUDINARY__API_SECRET // Click 'View Credentials' below to copy your API secret
+        api_key: process.env.CLOUDINARY_API_KEY, 
+        api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View Credentials' below to copy your API secret
     });
 
     // Upload an image
@@ -14,11 +14,14 @@ import fs from "fs";
         try {
             if(!localFilePath) return null;
             //upload file on cloudinary
-            const response=cloudinary.uploader.upload(localFilePath,{
+            //console.log("Starting upload to Cloudinary for file:", localFilePath);
+
+            const response= await cloudinary.uploader.upload(localFilePath,{
                 resource_type:"auto"
-            })//file has been uploaded successfully
-            console.log("file is uploaded on cloudinary");
-            response.url();
+            });//file has been uploaded successfully
+            //console.log("File uploaded successfully:", response);
+            
+            fs.unlinkSync(localFilePath);
             return response;
 
         } catch (error) {
